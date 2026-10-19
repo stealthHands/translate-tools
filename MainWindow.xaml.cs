@@ -10,17 +10,17 @@ public partial class MainWindow : Window
     private readonly TranslationSession _session;
     private readonly TranslationOverlay _overlay = new();
     private GoogleTranslateWindow? _googleWindow;
+    private RegionHighlightWindow? _selectionHighlight;
     private ScreenRegion? _region;
     private bool _paused;
 
     public MainWindow()
     {
         InitializeComponent();
-        _session = new TranslationSession(new GdiScreenCapture(), new TesseractOcrService(), new LocalOnnxTranslator(LocalModelBrowser));
-        _session.TranslationReady += (_, text) => Dispatcher.Invoke(() => _overlay.ShowTranslation(text));
-        _session.ExternalTextReady += (_, text) => Dispatcher.Invoke(() =>
+        _session = new TranslationSession(new GdiScreenCapture(), new TesseractOcrService());
+        _session.SourceTextReady += (_, text) => Dispatcher.Invoke(() =>
         {
-            _overlay.ShowTranslation("请查看 Google 翻译备用窗口中的译文。\n\n" + text);
+            _overlay.ShowTranslation("字幕已发送到 Google 翻译，请查看翻译窗口。\n\n" + text);
             EnsureGoogleWindow().ShowSource(text);
         });
         _session.StatusChanged += (_, text) => Dispatcher.Invoke(() => SetStatus(text));
@@ -30,8 +30,18 @@ public partial class MainWindow : Window
     private async void SelectButton_Click(object sender, RoutedEventArgs e)
     {
         await _session.StopAsync();
-        _region = new AreaSelectionWindow().SelectRegion();
-        if (_region is null) { SetStatus("已取消区域选择"); return; }
+        _selectionHighlight?.Hide();
+        var selectedRegion = new AreaSelectionWindow().SelectRegion();
+        if (selectedRegion is null)
+        {
+            _selectionHighlight?.Show();
+            SetStatus("已取消区域选择");
+            return;
+        }
+        _region = selectedRegion;
+        _selectionHighlight?.Close();
+        _selectionHighlight = new RegionHighlightWindow(selectedRegion.Value);
+        _selectionHighlight.Show();
         StartButton.IsEnabled = true;
         SetStatus($"已选择区域 {_region.Value.Width} × {_region.Value.Height}");
     }
@@ -58,15 +68,6 @@ public partial class MainWindow : Window
         _session.SetPaused(_paused);
         PauseButton.Content = _paused ? "继续" : "暂停";
         SetStatus(_paused ? "已暂停" : "正在识别并翻译…");
-    }
-
-    private void TranslationMode_SelectionChanged(object sender, System.Windows.Controls.SelectionChangedEventArgs e)
-    {
-        if (_session is null || TranslationMode is null) return;
-        var useGoogle = TranslationMode.SelectedIndex == 1;
-        _session.SetExternalTranslation(useGoogle);
-        if (useGoogle) EnsureGoogleWindow().Show();
-        else _googleWindow?.Hide();
     }
 
     private GoogleTranslateWindow EnsureGoogleWindow()
@@ -112,6 +113,7 @@ public partial class MainWindow : Window
     {
         await _session.DisposeAsync();
         _googleWindow?.Close();
+        _selectionHighlight?.Close();
         _overlay.Close();
         base.OnClosed(e);
     }

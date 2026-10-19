@@ -1,9 +1,8 @@
 .tools/
-TranslationWorker/node_modules/
-TranslationWorker/vendor/
-Models/tessdata/*.traineddata
-Models/opus-mt-en-zh/onnx/
 bin/
 obj/
+publish/
+发布版/
+Dependencies/
 *.user
 *.suo

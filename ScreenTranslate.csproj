@@ -17,7 +17,7 @@
     <PackageReference Include="Microsoft.Web.WebView2" Version="1.0.4258.31" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Models\**\*" CopyToOutputDirectory="PreserveNewest" />
-    <Content Include="TranslationWorker\**\*" CopyToOutputDirectory="PreserveNewest" Exclude="TranslationWorker\node_modules\**\*" />
+    <Content Include="Models\tessdata\eng.traineddata" CopyToOutputDirectory="PreserveNewest" Condition="Exists('Models\tessdata\eng.traineddata')" />
+    <Content Include="Dependencies\MicrosoftEdgeWebView2RuntimeInstallerX64.exe" CopyToOutputDirectory="PreserveNewest" Condition="Exists('Dependencies\MicrosoftEdgeWebView2RuntimeInstallerX64.exe')" />
   </ItemGroup>
 </Project>

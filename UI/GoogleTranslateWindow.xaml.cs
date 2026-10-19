@@ -1,4 +1,5 @@
 using System.Windows;
+using Microsoft.Web.WebView2.Core;
 
 namespace ScreenTranslate.UI;
 
@@ -25,7 +26,11 @@ public partial class GoogleTranslateWindow : Window
     {
         try
         {
-            await Browser.EnsureCoreWebView2Async();
+            var userDataFolder = System.IO.Path.Combine(
+                Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData),
+                "ScreenTranslate", "WebView2");
+            var environment = await CoreWebView2Environment.CreateAsync(null, userDataFolder);
+            await Browser.EnsureCoreWebView2Async(environment);
             _browserReady = true;
             Browser.CoreWebView2.Settings.AreDevToolsEnabled = false;
             Browser.CoreWebView2.Settings.AreDefaultContextMenusEnabled = true;
@@ -34,7 +39,7 @@ public partial class GoogleTranslateWindow : Window
         }
         catch (Exception ex)
         {
-            MessageBox.Show(this, $"无法打开 Google 翻译网页。请确认此电脑可以访问 translate.google.com。\n\n{ex.Message}", "备用翻译不可用", MessageBoxButton.OK, MessageBoxImage.Warning);
+            MessageBox.Show(this, $"无法打开 Google 翻译网页。请确认此电脑已安装 WebView2 且可以访问 translate.google.com。\n\n{ex.Message}", "Google 翻译不可用", MessageBoxButton.OK, MessageBoxImage.Warning);
         }
     }
 
