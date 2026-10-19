@@ -1,0 +1,6 @@
+<Window x:Class="ScreenTranslate.UI.AreaSelectionWindow" xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" WindowStyle="None" ResizeMode="NoResize" ShowInTaskbar="False" Topmost="True" AllowsTransparency="True" Background="#55000000" Cursor="Cross" KeyDown="Window_KeyDown" MouseLeftButtonDown="Window_MouseLeftButtonDown" MouseMove="Window_MouseMove" MouseLeftButtonUp="Window_MouseLeftButtonUp">
+  <Canvas x:Name="SelectionCanvas" ClipToBounds="True">
+    <TextBlock x:Name="Hint" Text="拖动鼠标框选字幕区域 · Esc 取消" Foreground="White" FontSize="20" Background="#AA172033" Padding="12,8" Canvas.Left="30" Canvas.Top="30" IsHitTestVisible="False" />
+    <Border x:Name="SelectionBox" BorderBrush="#FF52D6A3" BorderThickness="2" Background="#2252D6A3" Visibility="Collapsed" IsHitTestVisible="False" />
+  </Canvas>
+</Window>

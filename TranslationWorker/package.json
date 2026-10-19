@@ -1,0 +1,7 @@
+{
+  "name": "screen-translate-worker",
+  "private": true,
+  "type": "module",
+  "scripts": { "stage": "node stage.mjs" },
+  "dependencies": { "@huggingface/transformers": "3.8.1" }
+}

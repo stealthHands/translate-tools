@@ -1,0 +1,5 @@
+<Window x:Class="ScreenTranslate.UI.TranslationOverlay" xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" Title="实时译文" Width="560" Height="150" MinWidth="320" MinHeight="90" WindowStyle="None" ResizeMode="CanResizeWithGrip" AllowsTransparency="True" Background="Transparent" Topmost="True" ShowInTaskbar="False" WindowStartupLocation="CenterScreen" MouseLeftButtonDown="Window_MouseLeftButtonDown">
+  <Border x:Name="Surface" CornerRadius="10" Background="#EB101722" Padding="18" BorderBrush="#445A6B81" BorderThickness="1">
+    <ScrollViewer VerticalScrollBarVisibility="Auto"><TextBlock x:Name="TranslationText" Text="译文将在这里显示" Foreground="White" FontSize="24" TextWrapping="Wrap" /></ScrollViewer>
+  </Border>
+</Window>

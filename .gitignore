@@ -1,0 +1,9 @@
+.tools/
+TranslationWorker/node_modules/
+TranslationWorker/vendor/
+Models/tessdata/*.traineddata
+Models/opus-mt-en-zh/onnx/
+bin/
+obj/
+*.user
+*.suo
