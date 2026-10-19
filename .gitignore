@@ -2,7 +2,5 @@
 bin/
 obj/
 publish/
-发布版/
-Dependencies/
 *.user
 *.suo

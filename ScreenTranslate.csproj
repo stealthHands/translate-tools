@@ -18,6 +18,5 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Models\tessdata\eng.traineddata" CopyToOutputDirectory="PreserveNewest" Condition="Exists('Models\tessdata\eng.traineddata')" />
-    <Content Include="Dependencies\MicrosoftEdgeWebView2RuntimeInstallerX64.exe" CopyToOutputDirectory="PreserveNewest" Condition="Exists('Dependencies\MicrosoftEdgeWebView2RuntimeInstallerX64.exe')" />
   </ItemGroup>
 </Project>

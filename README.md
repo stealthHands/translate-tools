@@ -2,19 +2,18 @@
 
 A Windows 10 22H2 / Windows 11 x64 desktop tool for selecting a screen region, recognizing English subtitles locally, and translating them to Simplified Chinese through the Google Translate website.
 
-## Features
+## Run from a GitHub checkout
 
-- Drag a rectangle over a transcript or subtitle region; capture supports desktop coordinates across monitors.
-- English OCR with the bundled Tesseract engine and English model.
-- Google Translate website is the only translation method. Recognized caption text is sent to Google, and the website is shown in a separate window.
-- Pause, resume, stop, choose another region, and adjust the translation overlay's font size and opacity.
+Download or clone the complete repository, then double-click `启动屏幕翻译.bat`. The checked-in `portable` folder contains the self-contained app and .NET runtime; the English OCR model and native Tesseract runtime are included in the project. If WebView2 is not already installed, the launcher combines the three installer parts in `Dependencies` and installs WebView2 offline. No Git LFS client or installer download is needed.
 
-## Build
+The WebView2 offline installer exceeds GitHub's 100 MB per-file limit, so it is split into three regular repository files, each under that limit. This keeps the installer available in both a normal clone and a GitHub source ZIP.
 
-Before building, place Microsoft's WebView2 x64 offline installer at `Dependencies/MicrosoftEdgeWebView2RuntimeInstallerX64.exe`. Run `发布便携版.ps1` on a Windows x64 development computer to create the self-contained `publish` folder. It contains the application, .NET runtime, OCR engine, OCR language data, and WebView2 offline installer. Double-click `启动屏幕翻译.bat`; it installs WebView2 from the included installer if needed, then opens the app. No .NET SDK, Node.js, npm, or ONNX model is needed on the target computer.
+The app itself has no .NET, SDK, Node.js, npm, or ONNX installation requirement on the target computer. Translation uses the Google Translate website, so translating text requires internet access to `translate.google.com`; OCR runs locally.
 
-Google Translate requires access to `translate.google.com`; translation contents are sent to Google, and the site may change independently.
+## Rebuild the portable app
+
+On a Windows x64 development computer with the .NET 8 SDK, run `发布便携版.ps1`. This regenerates the checked-in `portable` directory. Building from source restores NuGet packages as usual; running the packaged app does not.
 
 ## License note
 
-Review the licenses for Tesseract, its English OCR data, and WebView2 before redistributing a packaged build.
+Review the licenses for Tesseract, its English OCR data, .NET, and WebView2 before redistributing this project.
